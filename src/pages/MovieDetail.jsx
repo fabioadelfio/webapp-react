@@ -52,6 +52,15 @@ export default function MovieDetail () {
                     </div>
                 </div>
             </div>
+            <h1>Reviews</h1>
+            {movie.reviews.map(review => (
+                <div key={review.id} className="card bg-danger mb-3 w-100">
+                    <div className="card-title text-center fs-2 fw-bold pt-3 text-warning">{review.name}</div>
+                    <div className="card-text text-center pt-3 fs-4">{review.text}</div>
+                    <div className="card-text p-3 fs-4 "><strong>Rating: {review.vote}</strong></div>
+                </div>
+            ))}
+
         </div>
     )
 }

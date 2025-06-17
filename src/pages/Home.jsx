@@ -35,9 +35,9 @@ export default function Home() {
                 <h1>Movies List</h1>
                 <div className="row d-flex flex-wrap">
                     {movies.map(movie => (
-                        <div key={movie.id} className="col-md-4">
+                        <div key={movie.id} className="col-md-3">
                             <Link to={`/movies/${movie.id}`}>
-                                <div className="card">
+                                <div className="card h-100">
                                     <img className="card-img-top" src={`/images/${movie.image}`} alt="" />
                                     <div className="card-body">
                                         <h5 className="card-title">{movie.title}</h5>
