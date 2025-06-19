@@ -8,7 +8,7 @@ export default function ReviewForm({ formData, setFormData, handleFormSubmit }) 
     }
     
     return (
-        <form className="row" onSubmit={handleFormSubmit}>
+        <form className="row w-100" onSubmit={handleFormSubmit}>
 
             <div className="col-6">
                 <label htmlFor="name" className="form-label">
