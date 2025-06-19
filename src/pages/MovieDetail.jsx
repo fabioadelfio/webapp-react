@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import axios from "axios";
+import ReviewForm from "../components/ReviewForm";
+
+const formInitialData = {
+    name: "",
+    vote: 1,
+    text: ""
+}
 
 export default function MovieDetail () {
 
@@ -9,10 +16,11 @@ export default function MovieDetail () {
     const [movie, setMovie] = useState();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
+    const [formData, setFormData] = useState(formInitialData);
 
-    const apiBaseUrl = `http://localhost:3000`;
+    const apiBaseUrl = import.meta.env.VITE_API_URL;
 
-    useEffect(() => {
+    const fetchMovie = () => {
         axios
             .get(`${apiBaseUrl}/movies/${id}`)
             .then(res => {
@@ -24,13 +32,29 @@ export default function MovieDetail () {
                 console.error(`API error: `, err);
                 setLoading(false);
             })
-    }, [id]);
+    };
+
+    useEffect(fetchMovie, [])
 
     console.log(movie)
 
     if (loading) return <div className="container mt-4">Loading Movie Details</div>;
     if (error) return <div className="container mt-4 text-danger">{error}</div>;
     if (!movie) return <div className="container mt-4">Movie Not Found</div>;
+
+    const fetchStoreReview = () => {
+        axios
+            .post(`${apiBaseUrl}/movies/${id}/reviews`, formData)
+            .then(res => {
+                fetchMovie();
+            })
+    }
+
+    const handleStoreReviewFormSubmit= (e) => {
+        e.preventDefault();
+        setFormData(formInitialData);
+        fetchStoreReview();
+    }
 
     return (
         <div className="container d-flex flex-column align-items-center my-5">
@@ -60,7 +84,12 @@ export default function MovieDetail () {
                     <div className="card-text p-3 fs-4 "><strong>Rating: {review.vote}</strong></div>
                 </div>
             ))}
-
+            <h1>Your Review</h1>
+            <ReviewForm
+                formData={formData}
+                setFormData={setFormData}
+                handleFormSubmit={handleStoreReviewFormSubmit}
+            />
         </div>
     )
 }

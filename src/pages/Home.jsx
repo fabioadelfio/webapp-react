@@ -9,7 +9,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
-    const apiBaseUrl = `http://localhost:3000`;
+    const apiBaseUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         axios
